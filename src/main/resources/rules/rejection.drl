@@ -1,0 +1,87 @@
+import com.uncia.unciadroolsemicalculation.model.EMICalculation;
+import com.uncia.unciadroolsemicalculation.model.ResponseEMIAndEli;
+import com.uncia.unciadroolsemicalculation.model.RejectionData;
+import com.uncia.unciadroolsemicalculation.model.ResponseRejection;
+
+dialect "mvel"
+
+rule "Checking Age of Participant"
+ when 
+ $response : ResponseRejection()
+  RejectionData(age != 0, age < 21)
+ then
+  $response.setStatus("Rejected!");
+  $response.addMessage("Age is less than 21.");
+end
+
+rule "Checking income of Participant"
+ when 
+ $response : ResponseRejection()
+  RejectionData(income != 0, income < 300000)
+ then
+  $response.setStatus("Rejected!");
+  $response.addMessage("Income is less than Lakhs.");
+end
+
+rule "Checking No Of Address Change In Last One Year of Participant"
+ when 
+ $response : ResponseRejection()
+  RejectionData(noOfAddressChangeInLastOneYear != 0, noOfAddressChangeInLastOneYear > 1)
+ then
+  $response.setStatus("Rejected!");
+  $response.addMessage("More than 1 address change in last 1 year.");
+end
+
+rule "Checking Enquery For PL In Last One Year of Participant"
+ when 
+ $response : ResponseRejection()
+  RejectionData(enqForPLInlastOneYear != 0, enqForPLInlastOneYear > 3)
+ then
+  $response.setStatus("Rejected!");
+  $response.addMessage("Too many enqueries.");
+end
+
+rule "Checking No Of Cheque Return of Participant"
+ when 
+ $response : ResponseRejection()
+  RejectionData(noOfChequeReturn != 0, noOfChequeReturn >2)
+ then
+  $response.setStatus("Rejected!");
+  $response.addMessage("No of return cheque more than 2.");
+end
+
+rule "Checking Average Quaterly Balance of Participant"
+ when 
+ $response : ResponseRejection()
+  RejectionData(averageQuaterlyBalance != 0, averageQuaterlyBalance < 5000)
+ then
+  $response.setStatus("Rejected!");
+  $response.addMessage("Average quarterly balance less than 5000.");
+end
+
+rule "Checking cibil Score of Participant"
+ when 
+ $response : ResponseRejection()
+  RejectionData(cibilScore != 0, cibilScore < 600)
+ then
+  $response.setStatus("Rejected!");
+  $response.addMessage("Cibil Score less than 600.");
+end
+
+rule "Checking DPD Greater Than 30 In Last One Year of Participant"
+ when 
+ $response : ResponseRejection()
+  RejectionData(dpdGreaterThan30InLastOneYear != 0, dpdGreaterThan30InLastOneYear > 3)
+ then
+  $response.setStatus("Rejected!");
+  $response.addMessage("DPD greater than 30 for more than 3 times.");
+end
+
+rule "Checking Missed Payment Ratio of Participant"
+ when 
+ $response : ResponseRejection()
+  RejectionData(missedPaymentRatio != 0, missedPaymentRatio > 20)
+ then
+  $response.setStatus("Rejected!");
+  $response.addMessage("MIssed payment ratio more than 20%.");
+end

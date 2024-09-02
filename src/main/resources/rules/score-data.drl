@@ -1,0 +1,328 @@
+import com.uncia.unciadroolsemicalculation.model.ScoreData;
+import com.uncia.unciadroolsemicalculation.model.ResponseScore;
+
+dialect "mvel"
+
+rule "Checking Age Of main applicant age >= 21 && age <= 35"
+ when 
+  ScoreData(age != 0, (age >= 21 && age <= 35))
+  $response : ResponseScore()
+ then
+  $response.addScore(1);  
+end
+
+rule "Checking Age Of main applicant age >= 35 && age <= 45"
+ when 
+  ScoreData(age != 0, (age >= 35 && age <= 45))
+  $response : ResponseScore()
+ then
+  $response.addScore(2);  
+end
+
+rule "Checking Age Of main applicant age >= 45 && age <= 59"
+ when 
+  ScoreData(age != 0, (age >= 45 && age <= 59))
+  $response : ResponseScore()
+ then
+  $response.addScore(3);  
+end
+
+rule "Checking income Of main applicant income >= 300000 && income <= 500000"
+ when 
+  ScoreData(income != 0, (income >= 300000 && income <= 500000))
+  $response : ResponseScore()
+ then
+  $response.addScore(5);  
+end
+
+rule "Checking income Of main applicant income >= 500000 && income <= 800000"
+ when 
+  ScoreData(income != 0, (income >= 500000 && income <= 800000))
+  $response : ResponseScore()
+ then
+  $response.addScore(10);  
+end
+
+rule "Checking income Of main applicant income >= 800000 && income <= 1200000"
+ when 
+  ScoreData(income != 0, (income >= 800000 && income <= 1200000))
+  $response : ResponseScore()
+ then
+  $response.addScore(15);  
+end
+
+rule "Checking income Of main applicant income >1200000"
+ when 
+  ScoreData(income != 0, (income >1200000))
+  $response : ResponseScore()
+ then
+  $response.addScore(20);  
+end
+
+rule "Checking employmentType Of main applicant Self- employed"
+ when 
+  ScoreData(employmentType != 0, employmentType == "Self-employed")
+  $response : ResponseScore()
+ then
+  $response.addScore(1);  
+end
+
+rule "Checking employmentType Of main applicant Salaried"
+ when 
+  ScoreData(employmentType != 0, employmentType == "Salaried")
+  $response : ResponseScore()
+ then
+  $response.addScore(2);  
+end
+
+rule "Checking noOfAddressChangeInLastOneYear 1 Of main applicant Salaried"
+ when 
+  ScoreData(noOfAddressChangeInLastOneYear != 0, noOfAddressChangeInLastOneYear == 1)
+  $response : ResponseScore()
+ then
+  System.out.println("noOfAddressChangeInLastOneYear : 1");
+  $response.addScore(2);  
+end
+
+rule "Checking noOfAddressChangeInLastOneYear 2 Of main applicant Salaried"
+ when 
+  ScoreData(noOfAddressChangeInLastOneYear != 0, noOfAddressChangeInLastOneYear == 2)
+  $response : ResponseScore()
+ then
+  System.out.println("noOfAddressChangeInLastOneYear : 2");
+  $response.addScore(1);  
+end
+
+rule "Checking enqForPLInLastOneYear 3 Of main applicant Salaried"
+ when 
+  ScoreData(enqForPLInLastOneYear != 0, enqForPLInLastOneYear == 3)
+  $response : ResponseScore()
+ then
+  System.out.println("enqForPLInLastOneYear : 3");
+  $response.addScore(1);  
+end
+
+rule "Checking enqForPLInLastOneYear 1-2 Of main applicant Salaried"
+ when 
+  ScoreData(enqForPLInLastOneYear != 0, enqForPLInLastOneYear >= 1 && enqForPLInLastOneYear <= 2)
+  $response : ResponseScore()
+ then
+  System.out.println("enqForPLInLastOneYear : 1-2");
+  $response.addScore(2);  
+end
+
+rule "Checking noOfChequeReturn 2 Of main applicant Salaried"
+ when 
+  ScoreData(noOfChequeReturn != 0, noOfChequeReturn == 2)
+  $response : ResponseScore()
+ then
+  System.out.println("noOfChequeReturn : 2");
+  $response.addScore(1);  
+end
+
+rule "Checking noOfChequeReturn 1 Of main applicant Salaried"
+ when 
+  ScoreData(noOfChequeReturn != 0, noOfChequeReturn == 1)
+  $response : ResponseScore()
+ then
+  System.out.println("noOfChequeReturn : 1");
+  $response.addScore(2);  
+end
+
+rule "Checking noOfChequeReturn 0 Of main applicant Salaried"
+ when 
+  ScoreData(noOfChequeReturn != 0, noOfChequeReturn == 0)
+  $response : ResponseScore()
+ then
+  System.out.println("noOfChequeReturn : 0");
+  $response.addScore(3);  
+end
+
+rule "Checking averageQuaterlyBalance less than 5000 Of main applicant Salaried"
+ when 
+  ScoreData(averageQuaterlyBalance != 0, averageQuaterlyBalance < 5000.00)
+  $response : ResponseScore()
+ then
+  System.out.println("averageQuaterlyBalance : <5000.00");
+  $response.addScore(1);  
+end
+
+rule "Checking averageQuaterlyBalance >= 5000.00 && <= 15000.00 Of main applicant Salaried"
+ when 
+  ScoreData(averageQuaterlyBalance != 0, averageQuaterlyBalance >= 5000.00 && averageQuaterlyBalance <= 15000.00)
+  $response : ResponseScore()
+ then
+  System.out.println("averageQuaterlyBalance : 5000.00 - 15000.00");
+  $response.addScore(2);  
+end
+
+rule "Checking averageQuaterlyBalance > 15000.00 Of main applicant Salaried"
+ when 
+  ScoreData(averageQuaterlyBalance != 0, averageQuaterlyBalance > 15000.00)
+  $response : ResponseScore()
+ then
+  System.out.println("averageQuaterlyBalance : > 15000.00");
+  $response.addScore(3);  
+end
+
+rule "Checking cibilScore between 600-650 Of main applicant Salaried"
+ when 
+  ScoreData(cibilScore != 0, cibilScore >= 600 && cibilScore <= 650)
+  $response : ResponseScore()
+ then
+  System.out.println("cibilScore : >= 600 && >= 650");
+  $response.addScore(5);  
+end
+
+rule "Checking cibilScore between 651-700 Of main applicant Salaried"
+ when 
+  ScoreData(cibilScore != 0, cibilScore >= 651 && cibilScore <= 700)
+  $response : ResponseScore()
+ then
+  System.out.println("cibilScore : >= 651 && <= 700");
+  $response.addScore(10);  
+end
+
+rule "Checking cibilScore less than >700 Of main applicant Salaried"
+ when 
+  ScoreData(cibilScore != 0, cibilScore > 700)
+  $response : ResponseScore()
+ then
+  System.out.println("cibilScore : > 700");
+  $response.addScore(10);  
+end
+
+rule "Checking dpdGreaterThan30InLastOneYear 3 Of main applicant Salaried"
+ when 
+  ScoreData(dpdGreaterThan30InLastOneYear != 0, dpdGreaterThan30InLastOneYear ==3)
+  $response : ResponseScore()
+ then
+  System.out.println("dpdGreaterThan30InLastOneYear : 3");
+  $response.addScore(1);  
+end
+
+rule "Checking dpdGreaterThan30InLastOneYear 1-2 Of main applicant Salaried"
+ when 
+  ScoreData(dpdGreaterThan30InLastOneYear != 0, dpdGreaterThan30InLastOneYear >=1 && dpdGreaterThan30InLastOneYear <=2)
+  $response : ResponseScore()
+ then
+  System.out.println("dpdGreaterThan30InLastOneYear : 1-2");
+  $response.addScore(2);  
+end
+
+rule "Checking dpdGreaterThan30InLastOneYear 1 Of main applicant Salaried"
+ when 
+  ScoreData(dpdGreaterThan30InLastOneYear != 0, dpdGreaterThan30InLastOneYear ==0)
+  $response : ResponseScore()
+ then
+  System.out.println("dpdGreaterThan30InLastOneYear : 0");
+  $response.addScore(3);  
+end
+
+rule "Checking ageOfOldestLoanAccount <1 Of main applicant Salaried"
+ when 
+  ScoreData(ageOfOldestLoanAccount != 0, ageOfOldestLoanAccount <1)
+  $response : ResponseScore()
+ then
+  System.out.println("ageOfOldestLoanAccount : <1");
+  $response.addScore(0);  
+end
+
+rule "Checking ageOfOldestLoanAccount 1-5 Of main applicant Salaried"
+ when 
+  ScoreData(ageOfOldestLoanAccount != 0, ageOfOldestLoanAccount >=1 && ageOfOldestLoanAccount <=5)
+  $response : ResponseScore()
+ then
+  System.out.println("ageOfOldestLoanAccount : 1-5");
+  $response.addScore(2);  
+end
+
+rule "Checking ageOfOldestLoanAccount >5 Of main applicant Salaried"
+ when 
+  ScoreData(ageOfOldestLoanAccount != 0, ageOfOldestLoanAccount >5)
+  $response : ResponseScore()
+ then
+  System.out.println("ageOfOldestLoanAccount : >5");
+  $response.addScore(4);  
+end
+
+rule "Checking missedPaymentRatio 10% - 20% Of main applicant Salaried"
+ when 
+  ScoreData(missedPaymentRatio != 0, missedPaymentRatio <=10 && missedPaymentRatio >=20)
+  $response : ResponseScore()
+ then
+  System.out.println("missedPaymentRatio : 10% - 20%");
+  $response.addScore(1);  
+end
+
+rule "Checking missedPaymentRatio 1% - 10% Of main applicant Salaried"
+ when 
+  ScoreData(missedPaymentRatio != 0, missedPaymentRatio <=1 && missedPaymentRatio >=10)
+  $response : ResponseScore()
+ then
+  System.out.println("missedPaymentRatio : 1% - 10%");
+  $response.addScore(2);  
+end
+
+rule "Checking missedPaymentRatio 0% Of main applicant Salaried"
+ when 
+  ScoreData(missedPaymentRatio != 0, missedPaymentRatio ==0)
+  $response : ResponseScore()
+ then
+  System.out.println("missedPaymentRatio : 0%");
+  $response.addScore(3);  
+end
+
+rule "Checking noOfTradeLineClosedInTime 0 Of main applicant Salaried"
+ when 
+  ScoreData(noOfTradeLineClosedInTime != 0, noOfTradeLineClosedInTime ==0)
+  $response : ResponseScore()
+ then
+  System.out.println("noOfTradeLineClosedInTime : 0");
+  $response.addScore(1);  
+end
+
+rule "Checking noOfTradeLineClosedInTime 1-2 Of main applicant Salaried"
+ when 
+  ScoreData(noOfTradeLineClosedInTime != 0, noOfTradeLineClosedInTime >=1 && noOfTradeLineClosedInTime <=2)
+  $response : ResponseScore()
+ then
+  System.out.println("noOfTradeLineClosedInTime : 1-2");
+  $response.addScore(2);  
+end
+
+rule "Checking noOfTradeLineClosedInTime >3 Of main applicant Salaried"
+ when 
+  ScoreData(noOfTradeLineClosedInTime != 0, noOfTradeLineClosedInTime >3)
+  $response : ResponseScore()
+ then
+  System.out.println("noOfTradeLineClosedInTime : >3");
+  $response.addScore(3);  
+end
+
+rule "Checking activeTradeLines Others Of main applicant Salaried"
+ when 
+  ScoreData(activeTradeLines != 0, activeTradeLines == "Others")
+  $response : ResponseScore()
+ then
+  System.out.println("activeTradeLines : Others");
+  $response.addScore(1);  
+end
+
+rule "Checking activeTradeLines VL Of main applicant Salaried"
+ when 
+  ScoreData(activeTradeLines != 0, activeTradeLines == "VL")
+  $response : ResponseScore()
+ then
+  System.out.println("activeTradeLines : Others");
+  $response.addScore(2);  
+end
+
+rule "Checking activeTradeLines HL &/or ML Of main applicant Salaried"
+ when 
+  ScoreData(activeTradeLines != 0, activeTradeLines == "HL" || activeTradeLines == "HL")
+  $response : ResponseScore()
+ then
+  System.out.println("activeTradeLines : HL &/or ML");
+  $response.addScore(3);  
+end

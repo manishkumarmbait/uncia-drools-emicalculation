@@ -1,0 +1,19 @@
+import com.uncia.unciadroolsemicalculation.model.EMICalculation;
+//import com.uncia.unciadroolsemicalculation.model.Deviation;
+import com.uncia.unciadroolsemicalculation.model.ResponseEMIAndEli;
+
+dialect "mvel"
+
+rule "EMI Calculation"
+ when 
+ $emiCalc : EMICalculation($pri : principal != 0, $rate : rate != 0, $time : time != 0, $monthlyFixedIncome : monthlyFixedIncome !=0,
+  $savingPercentage : savingPercentage != 0, $otherEMI : otherEMI != 0, $amountInLakh : amountInLakh != 0)
+ $response : ResponseEMIAndEli()
+ then
+ 
+ $rate = $rate/(12*100);	//one month interest
+		$time = $time*12;		//one month period
+		$emi = ($pri*$rate*Math.pow(1+$rate,$time))/(Math.pow(1+$rate,$time)-1);
+ 		$response.setEmi($emi);
+ 	    $response.setLoanEligibilityAmount((($monthlyFixedIncome*$savingPercentage/100)-$otherEMI)/($emi/$amountInLakh));
+end
